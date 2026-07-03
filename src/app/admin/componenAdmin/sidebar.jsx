@@ -6,9 +6,8 @@ export default function SidebarAdmin() {
   const router = useRouter();
 
   return (
-    <aside className="w-72 fixed left-0 top-16 bottom-0 bg-gray-500 px-4 py-9 text-white font-poppins">
-      <ul className="space-y-8 font-medium">
-
+    <aside className="fixed left-0 top-16 bottom-0 w-72 bg-gray-500 text-white font-poppins overflow-y-auto">
+        <ul className="space-y-8 font-medium px-4 py-9 pb-10">
         {/* Dashboard */}
         <li>
           <a
