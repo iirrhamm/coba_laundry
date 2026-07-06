@@ -1,145 +1,178 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SidebarAdmin() {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   return (
-    <aside className="fixed left-0 top-16 bottom-0 w-72 bg-gray-500 text-white font-poppins overflow-y-auto">
-        <ul className="space-y-8 font-medium px-4 py-9 pb-10">
-        {/* Dashboard */}
-        <li>
-          <a
-            href="/admin/profilAdmin"
-            className="flex items-center p-3 rounded-lg hover:bg-blue-600"
-          >
-            <svg
-              className="w-6 h-6 text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 20V14h4v6h5v-8h3L10 0 0 12h3v8z" />
-            </svg>
-            <span className="ml-4">Dashboard</span>
-          </a>
-        </li>
+    <>
+      {/* Tombol Hamburger (HP) */}
+      <button
+        onClick={() => setOpen(true)}
+        className="lg:hidden fixed top-20 left-4 z-50 bg-blue-600 text-white p-2 rounded-lg shadow-lg"
+      >
+        ☰
+      </button>
 
-        {/* Tambah Orderan */}
-        <li>
+      {/* Background Hitam */}
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`
+          fixed top-16 left-0 bottom-0
+          w-72
+          bg-gray-600
+          text-white
+          px-4
+          py-8
+          z-50
+          overflow-y-auto
+          transform
+          transition-transform
+          duration-300
+
+          ${
+            open ? "translate-x-0" : "-translate-x-full"
+          }
+
+          lg:translate-x-0
+        `}
+      >
+        {/* Tombol X */}
+        <div className="flex justify-end lg:hidden mb-5">
           <button
-            onClick={() => router.push("/admin/tambahPaket")}
-            className="flex items-center p-3 rounded-lg hover:bg-blue-600 w-full text-left"
+            onClick={() => setOpen(false)}
+            className="text-3xl"
           >
-            <svg
-              className="w-6 h-6 text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
-            </svg>
-            <span className="ml-4">Tambah Orderan</span>
+            ✕
           </button>
-        </li>
+        </div>
 
-        {/* Riwayat Order */}
-        <li>
-          <button
-            onClick={() => router.push("/admin/konfirmasi")}
-            className="flex items-center p-3 rounded-lg hover:bg-blue-600 w-full text-left"
-          >
-            <svg
-              className="w-6 h-6 text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
+        <ul className="space-y-4">
+
+          {/* Dashboard */}
+          <li>
+            <button
+              onClick={() => {
+                router.push("/admin/profilAdmin");
+                setOpen(false);
+              }}
+              className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-blue-600 transition"
             >
-              <path d="M4 3h12v2H4V3zm0 5h8v2H4V8zm0 5h12v2H4v-2z" />
-            </svg>
-            <span className="ml-4">Daftar Orderan</span>
-          </button>
-        </li>
+              🏠
+              Dashboard
+            </button>
+          </li>
 
-        {/* Paket / Layanan */}
-        <li>
-          <a
-            href="/admin/paket"
-            className="flex items-center p-3 rounded-lg hover:bg-blue-600"
-          >
-            <svg
-              className="w-6 h-6 text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
+          {/* Tambah Order */}
+          <li>
+            <button
+              onClick={() => {
+                router.push("/admin/tambahPaket");
+                setOpen(false);
+              }}
+              className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-blue-600 transition"
             >
-              <path d="M10 0L0 5v10l10 5 10-5V5L10 0z" />
-            </svg>
-            <span className="ml-4">Paket / Layanan</span>
-          </a>
-        </li>
+              ➕
+              Tambah Orderan
+            </button>
+          </li>
 
-        {/* Notifikasi WA */}
-        <li>
-          <button
-            onClick={() => router.push("/admin/notifikasi")}
-            className="flex items-center p-3 rounded-lg hover:bg-blue-600 w-full text-left"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 24 24"
+          {/* Daftar Order */}
+          <li>
+            <button
+              onClick={() => {
+                router.push("/admin/konfirmasi");
+                setOpen(false);
+              }}
+              className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-blue-600 transition"
             >
-              <path d="M12 0a12 12 0 0 0-10 18l-2 6 6-2a12 12 0 1 0 6-22z" />
-            </svg>
-            <span className="ml-4">Riwayat Notifikasi</span>
-          </button>
-        </li>
+              📋
+              Daftar Orderan
+            </button>
+          </li>
 
-        {/* Laporan */}
-        <li>
-          <button
-            onClick={() => router.push("/admin/laporan")}
-            className="flex items-center p-3 rounded-lg hover:bg-blue-600 w-full text-left"
-          >
-            <svg
-              className="w-6 h-6 text-white"
-              fill="currentColor"
-              viewBox="0 0 24 24"
+          {/* Paket */}
+          <li>
+            <button
+              onClick={() => {
+                router.push("/admin/paket");
+                setOpen(false);
+              }}
+              className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-blue-600 transition"
             >
-              <path d="M4 4h16v2H4zm0 5h10v2H4zm0 5h16v2H4zm0 5h10v2H4z" />
-            </svg>
-            <span className="ml-4">Laporan Keuangan</span>
-          </button>
-        </li>
+              📦
+              Paket / Layanan
+            </button>
+          </li>
 
-        {/* Pengaturan */}
-        <li>
-          <button
-            onClick={() => router.push("/admin/pengaturan")}
-            className="flex items-center p-3 rounded-lg hover:bg-blue-600 w-full text-left"
-          >
-            <svg
-              className="w-6 h-6 text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
+          {/* Notifikasi */}
+          <li>
+            <button
+              onClick={() => {
+                router.push("/admin/notifikasi");
+                setOpen(false);
+              }}
+              className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-blue-600 transition"
             >
-              <path d="M12.94 0l-.94 2.06L11 2c-.7 0-1.4.1-2 .3L8.06 2 7 0H3L4.1 2.3C2.8 3.4 2 5.1 2 7c0 1.9.8 3.6 2.1 4.7L3 14h4l1.06-2.06 1 .3c.6.2 1.3.3 2 .3l1 .06.94 2.06H17l-1.1-2.3C18.2 10.6 19 8.9 19 7s-.8-3.6-2.1-4.7L17 0h-4z" />
-            </svg>
-            <span className="ml-4">Pengaturan</span>
-          </button>
-        </li>
+              🔔
+              Riwayat Notifikasi
+            </button>
+          </li>
 
-        {/* Logout */}
-        <li>
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full"
-            onClick={() => {
-              alert("Logout berhasil!");
-              router.push("/");
-            }}
-          >
-            Logout
-          </button>
-        </li>
-      </ul>
-    </aside>
+          {/* Laporan */}
+          <li>
+            <button
+              onClick={() => {
+                router.push("/admin/laporan");
+                setOpen(false);
+              }}
+              className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-blue-600 transition"
+            >
+              📊
+              Laporan Keuangan
+            </button>
+          </li>
+
+          {/* Pengaturan */}
+          <li>
+            <button
+              onClick={() => {
+                router.push("/admin/pengaturan");
+                setOpen(false);
+              }}
+              className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-blue-600 transition"
+            >
+              ⚙️
+              Pengaturan
+            </button>
+          </li>
+
+          {/* Logout */}
+          <li className="pt-4">
+            <button
+              onClick={() => {
+                alert("Logout berhasil!");
+                router.push("/");
+                setOpen(false);
+              }}
+              className="w-full bg-red-500 hover:bg-red-600 rounded-lg py-3 font-semibold"
+            >
+              Logout
+            </button>
+          </li>
+
+        </ul>
+      </aside>
+    </>
   );
 }
